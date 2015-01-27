@@ -24,7 +24,7 @@
 	</parent>
 	<groupId>org.apache.taverna.language</groupId>
 	<artifactId>taverna-language</artifactId>
-	<version>0.15.1-incubating-SNAPSHOT</version>
+	<version>0.16.1-incubating-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>Apache Taverna Language APIs (Scufl2, Databundle)</name>
@@ -33,6 +33,77 @@
 	</description>
 
 	<build>
+		<plugins>
+			            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+            <plugin>
+        <groupId>org.apache.rat</groupId>
+        <artifactId>apache-rat-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>rat-checks</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <useDefaultExcludes>true</useDefaultExcludes>
+          <excludes>
+            <!--
+            Text and Markdown files are typically used only for documentation purposes
+            and license declarations are usually spurious in these files since often they
+            will refer to the LICENSE/NOTICE for users to find the actual licenses
+            -->
+            <exclude>**/*.md</exclude>
+            <!--
+            META-INF services files can include comments but a license header would be
+            unecessarily clutter so we exclude these
+            -->
+            <exclude>**/META-INF/services/*</exclude>
+            <!-- resources are excluded -->
+            <exclude>**/resources/</exclude>
+          </excludes>
+          <addLicenseHeaders>forced</addLicenseHeaders>
+          <numUnapprovedLicenses>100</numUnapprovedLicenses>
+        </configuration>
+    </plugin>
+		
+<!-- 		            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>license-maven-plugin</artifactId>
+              <version>1.7</version>
+              <executions>
+                <execution>
+                  <id>add-licenses</id>
+                  <phase>generate-sources</phase>
+                  <goals>
+                    <goal>aggregate-add-third-party</goal>
+                  </goals>
+                  <configuration>
+                    <excludedGroups>.*(mygrid|taverna).*</excludedGroups>
+                    <useMissingFile>true</useMissingFile>
+                    <missingFile>src/license/THIRD-PARTY.properties</missingFile>
+                    <licenseMerges>
+                      <licenseMerge>The Apache Software License, Version 2.0|Apache 2|Apache License|Apache License, Version 2.0|Apache Public License 2.0|Apache License Version 2.0|Apache Software License 2.0|Apache Software License - Version 2.0</licenseMerge>
+                      <licenseMerge>The BSD License|BSD|BSD License|BSD-style license|BSD style|Aduna BSD license|Aduna BSD-style license</licenseMerge>
+                      <licenseMerge>MIT License|The MIT License|MIT license</licenseMerge>
+                      <licenseMerge>GNU Lesser General Public License|GNU LESSER GENERAL PUBLIC LICENSE|GNU Library or Lesser General Public License|LGPL</licenseMerge>
+                      <licenseMerge>Common Development and Distribution License (CDDL) v1.0|CDDL 1.1|COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0</licenseMerge>
+                      <licenseMerge>Eclipse Public License, Version 1.0|Eclipse Public License</licenseMerge>
+                    </licenseMerges>
+                  </configuration>
+                </execution>
+              </executions>
+            </plugin> -->
+		</plugins>
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -77,10 +148,12 @@
                   <schemaDirectory>src/main/xsd</schemaDirectory>
                 </configuration>
             </plugin>
-			</plugins>
-		</pluginManagement>
-	</build>
 
+
+    
+            </plugins>
+            </pluginManagement>
+            </build>
 <!-- TODO: Update -->
   <scm>
     <!-- TODO: Replace with git.apache.org details :
@@ -214,7 +287,6 @@
     -->
     <module>taverna-scufl2-annotation</module>
 		<module>taverna-scufl2-wfdesc</module>
-    <module>taverna-baclava-utilities</module>
     <module>taverna-robundle</module>
     <module>taverna-databundle</module>
   </modules>

@@ -1,3 +1,23 @@
+#
+#
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+#
+#
 
 require 'rubygems'
 require 'rdf'
@@ -7,10 +27,10 @@ require 'zip/zipfilesystem'
 scufl2 = RDF::Vocabulary.new("http://ns.taverna.org.uk/2010/scufl2#")
 dc = RDF::Vocabulary.new("http://purl.org/dc/elements/1.1/")
 
-graph = RDF::Graph.load("../../../../scufl2-rdfxml/src/test/resources/uk/org/taverna/scufl2/rdfxml/example/workflowBundle.rdf")
+graph = RDF::Graph.load("../../../../taverna-scufl2-rdfxml/src/test/resources/org/apache/taverna/scufl2/rdfxml/example/workflowBundle.rdf")
 
 graph = RDF::Graph.new()
-Zip::ZipFile.open("../../../../scufl2-rdfxml/src/test/resources/uk/org/taverna/scufl2/rdfxml/example.scufl2") {
+Zip::ZipFile.open("../../../../taverna-scufl2-rdfxml/src/test/resources/org/apache/taverna/scufl2/rdfxml/example.wfbundle") {
     |zipfile|
     a = zipfile.file.read("workflowBundle.rdf")
     RDF::Reader.for(:rdfxml).new(a) do |reader|

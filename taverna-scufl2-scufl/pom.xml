@@ -20,7 +20,7 @@
   <parent>
     <groupId>org.apache.taverna.language</groupId>
     <artifactId>taverna-language</artifactId>
-    <version>0.15.1-incubating-SNAPSHOT</version>
+    <version>0.16.1-incubating-SNAPSHOT</version>
   </parent>
   <artifactId>taverna-scufl2-scufl</artifactId>
   <packaging>bundle</packaging>
@@ -34,7 +34,7 @@
                 <!--
                 <configuration>
                     <instructions>
-                        <Export-Package>uk.org.taverna.scufl2.api.io;provide:=true</Export-Package>
+                        <Export-Package>org.apache.taverna.scufl2.api.io;provide:=true</Export-Package>
                     </instructions>
                 </configuration>
                  -->
@@ -50,13 +50,44 @@
 					</execution>
 				</executions>
 				<configuration>
-					<packageName>uk.org.taverna.scufl2.xml.scufl.jaxb</packageName>
-					<schemaDirectory>src/main/resources/uk/org/taverna/scufl2/translator/scufl/xsd/</schemaDirectory>
+					<packageName>org.apache.taverna.scufl2.xml.scufl.jaxb</packageName>
+					<schemaDirectory>src/main/resources/org/apache/taverna/scufl2/translator/scufl/xsd/</schemaDirectory>
 				</configuration>
 			</plugin>
-		</plugins>
-	</build>
- 	<dependencies>
+
+	            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+                <plugin>
+        <groupId>org.apache.rat</groupId>
+        <artifactId>apache-rat-plugin</artifactId>
+        <configuration>
+          <useDefaultExcludes>true</useDefaultExcludes>
+          <excludes>
+            <!--
+            Text and Markdown files are typically used only for documentation purposes
+            and license declarations are usually spurious in these files since often they
+            will refer to the LICENSE/NOTICE for users to find the actual licenses
+            -->
+            <exclude>**/*.md</exclude>
+            <!--
+            META-INF services files can include comments but a license header would be
+            unecessarily clutter so we exclude these
+            -->
+            <exclude>**/META-INF/services/*</exclude>
+            <!-- resources are excluded -->
+            <exclude>**/resources/</exclude>
+          </excludes>
+           <addLicenseHeaders>forced</addLicenseHeaders>
+        </configuration>
+      </plugin>
+                  </plugins>
+            </build> 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>taverna-scufl2-api</artifactId>
